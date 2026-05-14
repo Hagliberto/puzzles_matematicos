@@ -1,5 +1,4 @@
-# Jogos Mágicos Progressivos V4
-
+# Jogos Mágicos Progressivos V19
 Abra `index.html`.
 
 ## Ajustes da V4
