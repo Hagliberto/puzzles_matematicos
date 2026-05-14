@@ -3978,3 +3978,91 @@ body.light-theme .hub-card{
   .hub-title{font-size:1rem;}
   .hub-description{font-size:.70rem;}
 }
+
+
+
+/* =========================
+   V20 PIN mode for solved demonstrations
+   ========================= */
+
+.icon-button.active-solution,
+body.solution-mode-active #solutionModeButton{
+  border-color:rgba(251,191,36,.55) !important;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,.16), transparent 36%),
+    linear-gradient(135deg, rgba(251,191,36,.24), rgba(125,211,252,.16)) !important;
+  box-shadow:0 0 22px rgba(251,191,36,.22);
+}
+
+.pin-modal-card{
+  max-width:440px;
+}
+
+.pin-box{
+  display:grid;
+  gap:8px;
+  margin-top:16px;
+  text-align:left;
+}
+
+.pin-box label{
+  font-weight:1000;
+  letter-spacing:-.02em;
+}
+
+.pin-box input{
+  width:100%;
+  height:48px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:var(--text);
+  padding:0 14px;
+  font:inherit;
+  font-weight:900;
+  outline:none;
+}
+
+.pin-box input:focus{
+  border-color:rgba(125,211,252,.56);
+  box-shadow:0 0 0 4px rgba(125,211,252,.12);
+}
+
+.pin-box small{
+  color:var(--muted);
+  line-height:1.35;
+}
+
+body.light-theme .pin-box input{
+  background:rgba(255,255,255,.78);
+  border-color:rgba(15,23,42,.14);
+}
+
+body.solution-mode .topbar::after{
+  content:"🗝️ Modo soluções";
+  position:absolute;
+  left:50%;
+  bottom:-12px;
+  transform:translateX(-50%);
+  padding:5px 10px;
+  border-radius:999px;
+  background:linear-gradient(135deg, rgba(251,191,36,.92), rgba(125,211,252,.9));
+  color:#07101f;
+  font-size:.68rem;
+  font-weight:1000;
+  box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+
+body.solution-mode .tile{
+  cursor:default;
+}
+
+body.solution-mode .cell.ok{
+  box-shadow:
+    inset 0 0 0 1px rgba(52,211,153,.35),
+    0 0 18px rgba(52,211,153,.22);
+}
+
+body.solution-mode .finish-modal{
+  display:none !important;
+}

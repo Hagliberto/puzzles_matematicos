@@ -5,6 +5,87 @@ function isMobileHome(){
   return window.matchMedia('(max-width: 720px)').matches;
 }
 
+const SOLUTION_MODE_PIN = "2026";
+function isSolutionMode(){
+  return localStorage.getItem("jogosMagicosSolutionMode")==="1";
+}
+function setSolutionMode(value){
+  if(value) localStorage.setItem("jogosMagicosSolutionMode","1");
+  else localStorage.removeItem("jogosMagicosSolutionMode");
+  document.body.classList.toggle("solution-mode-active", !!value);
+}
+function getDisplayDB(){
+  const db=normalizeDB();
+  if(!isSolutionMode()) return db;
+  const all=(window.MAGIC_CHALLENGES||[]).map(g=>g.id);
+  return {
+    ...db,
+    mode:"free",
+    allUnlocked:true,
+    unlocked:all,
+    completed:Object.fromEntries(all.map(id=>[id,true])),
+    best:{
+      ...db.best,
+      ...Object.fromEntries((window.MAGIC_CHALLENGES||[]).map(g=>[
+        g.id,
+        db.best?.[g.id] || {
+          firstTime:"--:--",
+          bestTime:"--:--",
+          firstSeconds:0,
+          bestSeconds:0,
+          solution:g.solution,
+          solutionMode:true
+        }
+      ]))
+    }
+  };
+}
+function openPinModal(){
+  const modal=document.getElementById("pinModal");
+  if(!modal){
+    const pin=prompt("Digite o PIN do modo soluções:");
+    if(pin===SOLUTION_MODE_PIN){ setSolutionMode(true); renderRadialHome(); }
+    return;
+  }
+  const input=document.getElementById("solutionPinInput");
+  const feedback=document.getElementById("pinFeedback");
+  modal.classList.add("active");
+  input.value="";
+  feedback.textContent="Esse modo não altera tempos, placar nem progresso do jogador.";
+  setTimeout(()=>input.focus(),120);
+}
+function closePinModal(){
+  document.getElementById("pinModal")?.classList.remove("active");
+}
+function confirmPin(){
+  const input=document.getElementById("solutionPinInput");
+  const feedback=document.getElementById("pinFeedback");
+  if(input.value.trim()===SOLUTION_MODE_PIN){
+    setSolutionMode(true);
+    closePinModal();
+    renderRadialHome();
+    showToast("Modo soluções liberado","Todos os desafios serão exibidos como resolvidos para demonstração.");
+  }else{
+    feedback.textContent="PIN incorreto. Tente novamente.";
+    input.select();
+  }
+}
+function toggleSolutionMode(){
+  if(isSolutionMode()){
+    openConfirmModal({
+      icon:"🗝️",
+      title:"Sair do modo soluções?",
+      message:"Os desafios voltarão a seguir o progresso real salvo neste navegador.",
+      details:"Nada do seu placar será apagado. O modo soluções apenas exibe uma versão demonstrativa.",
+      primaryText:"Sair do modo",
+      secondaryText:"Continuar vendo",
+      onPrimary:()=>{ setSolutionMode(false); renderRadialHome(); showToast("Modo normal ativado","A tela voltou ao progresso real do jogador."); }
+    });
+  }else{
+    openPinModal();
+  }
+}
+
 function getTypeColor(type){
   if(type === 'triangle') return '#4dd6ff';
   if(type === 'hollow') return '#ff66b8';
@@ -74,7 +155,7 @@ function makeNode(game, index, total, db){
   const color = getTypeColor(game.type);
   const angle = (360 / total) * index;
   const radius = total > 10 ? 252 : 232;
-  const meta = done ? 'Concluído' : unlocked ? 'Liberado' : 'Bloqueado';
+  const meta = isSolutionMode() ? 'Resolvido' : done ? 'Concluído' : unlocked ? 'Liberado' : 'Bloqueado';
   return `
     <button class="orbit-node ${isActive?'active':''} ${done?'done':''} ${unlocked?'':'locked'}"
             style="--angle:${angle}deg; --radius:${radius}px; --node-color:${color}"
@@ -95,10 +176,15 @@ function openPreview(game, best){
 }
 
 function getToggleLabel(db){
+  if(isSolutionMode()) return '🗝️ Soluções';
   return (db.mode === 'free' || db.allUnlocked) ? '🧭 Livre' : '🔒 Bloqueado';
 }
 
 function toggleModeAndRender(){
+  if(isSolutionMode()){
+    toggleSolutionMode();
+    return;
+  }
   const newDb = normalizeDB();
   newDb.mode = (newDb.mode === 'free' || newDb.allUnlocked) ? 'sequence' : 'free';
   writeDB(newDb);
@@ -111,10 +197,11 @@ function renderHub(game, db){
   if(!hub || !game) return;
   const unlocked = isUnlocked(game, db);
   const done = !!db.completed?.[game.id];
+  const demo = isSolutionMode();
   const paused = !!db.paused?.[game.id] && Array.isArray(db.paused[game.id].slots) && db.paused[game.id].slots.some(v=>v!==null);
-  const best = db.best?.[game.id];
+  const best = db.best?.[game.id] || (isSolutionMode()?{solution:game.solution,firstTime:'--:--',bestTime:'--:--'}:undefined);
   const color = getTypeColor(game.type);
-  const primaryText = paused ? '▶ Continuar' : unlocked ? '▶ Abrir desafio' : '🔓 Liberar desafio';
+  const primaryText = demo ? '👁 Ver resolvido' : paused ? '▶ Continuar' : unlocked ? '▶ Abrir desafio' : '🔓 Liberar desafio';
 
   hub.style.setProperty('--hub-color', color);
   hub.innerHTML = `
@@ -128,7 +215,7 @@ function renderHub(game, db){
     </div>
     <div class="hub-actions">
       <button class="primary-button ${unlocked?'':'is-soft-disabled'}" id="hubPrimaryAction">${primaryText}</button>
-      ${done ? '<button class="button preview-icon-button" id="hubPreviewAction" title="Ver solução" aria-label="Ver solução">👁</button>' : ''}
+      ${(done||demo) ? '<button class="button preview-icon-button" id="hubPreviewAction" title="Ver solução" aria-label="Ver solução">👁</button>' : ''}
     </div>`;
 
   document.getElementById('hubToggleMode').onclick = toggleModeAndRender;
@@ -136,23 +223,25 @@ function renderHub(game, db){
     if(unlocked){ window.location.href = `./desafios/${game.id}/`; }
     else { toggleModeAndRender(); }
   };
-  if(done && document.getElementById('hubPreviewAction')){
+  if((done||demo) && document.getElementById('hubPreviewAction')){
     document.getElementById('hubPreviewAction').onclick = ()=>openPreview(game, best);
   }
 }
 
 function openChallengeInfoModal(game, db){
+  if(isSolutionMode()) db=getDisplayDB();
   const unlocked = isUnlocked(game, db);
   const done = !!db.completed?.[game.id];
+  const demo = isSolutionMode();
   const paused = !!db.paused?.[game.id] && Array.isArray(db.paused[game.id].slots) && db.paused[game.id].slots.some(v=>v!==null);
-  const best = db.best?.[game.id];
+  const best = db.best?.[game.id] || (isSolutionMode()?{solution:game.solution,firstTime:'--:--',bestTime:'--:--'}:undefined);
   document.getElementById('challengeInfoIcon').textContent = game.icon;
   document.getElementById('challengeInfoTitle').textContent = game.short;
   document.getElementById('challengeInfoSubtitle').textContent = game.math || game.title;
   document.getElementById('challengeInfoBody').innerHTML = `
     <div class="challenge-info-pill-row">
       <button class="hub-status hub-toggle" id="modalToggleMode">${getToggleLabel(db)}</button>
-      <span class="challenge-mini-status ${unlocked?'unlocked':'locked'}">${done ? 'Concluído' : paused ? 'Pausado' : unlocked ? 'Liberado' : 'Bloqueado'}</span>
+      <span class="challenge-mini-status ${unlocked?'unlocked':'locked'}">${demo ? 'Resolvido por PIN' : done ? 'Concluído' : paused ? 'Pausado' : unlocked ? 'Liberado' : 'Bloqueado'}</span>
     </div>
     <p class="challenge-info-description">${getGameDescription(game)}</p>
     <div class="challenge-info-times">
@@ -162,15 +251,15 @@ function openChallengeInfoModal(game, db){
   const actions = document.getElementById('challengeInfoActions');
   actions.innerHTML = `
       <button class="primary-button ${unlocked?'':'is-soft-disabled'}" id="challengeOpenBtn">${paused ? '▶ Continuar' : unlocked ? '▶ Abrir desafio' : '🔓 Liberar desafio'}</button>
-      ${done ? '<button class="button preview-icon-button" id="challengePreviewBtn" title="Ver solução" aria-label="Ver solução">👁</button>' : '<button class="button" id="challengeCloseBtn">Fechar</button>'}`;
+      ${(done||demo) ? '<button class="button preview-icon-button" id="challengePreviewBtn" title="Ver solução" aria-label="Ver solução">👁</button>' : '<button class="button" id="challengeCloseBtn">Fechar</button>'}`;
   document.getElementById('challengeInfoModal').classList.add('active');
   document.getElementById('modalToggleMode').onclick = ()=>{ toggleModeAndRender(); openChallengeInfoModal(game, normalizeDB()); };
   document.getElementById('challengeOpenBtn').onclick = ()=>{
     if(unlocked){ window.location.href = `./desafios/${game.id}/`; }
     else { toggleModeAndRender(); openChallengeInfoModal(game, normalizeDB()); }
   };
-  if(done && document.getElementById('challengePreviewBtn')) document.getElementById('challengePreviewBtn').onclick = ()=>openPreview(game, best);
-  if(!done && document.getElementById('challengeCloseBtn')) document.getElementById('challengeCloseBtn').onclick = ()=>document.getElementById('challengeInfoModal').classList.remove('active');
+  if((done||demo) && document.getElementById('challengePreviewBtn')) document.getElementById('challengePreviewBtn').onclick = ()=>openPreview(game, best);
+  if(!(done||demo) && document.getElementById('challengeCloseBtn')) document.getElementById('challengeCloseBtn').onclick = ()=>document.getElementById('challengeInfoModal').classList.remove('active');
 }
 
 function renderScoreModal(db, games){
@@ -207,7 +296,7 @@ function updateAppbarSummary(db, games){
 }
 
 function renderRadialHome(){
-  const db = normalizeDB();
+  const db = getDisplayDB();
   const games = (window.MAGIC_CHALLENGES || []).slice();
   if(!games.length) return;
 
@@ -230,6 +319,7 @@ function renderRadialHome(){
 
   if(!isMobileHome()) renderHub(current, db);
   updateAppbarSummary(db, games);
+  document.getElementById('solutionModeButton')?.classList.toggle('active-solution', isSolutionMode());
   updateContinueButton(db);
   renderScoreModal(db, games);
   updateStartButton();
@@ -259,12 +349,18 @@ function resetProgress(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   normalizeDB();
+  document.body.classList.toggle('solution-mode-active', isSolutionMode());
   setupLattesLink();
   renderRadialHome();
   document.getElementById('themeToggle')?.addEventListener('click', ()=>{ toggleTheme(); renderRadialHome(); });
   document.getElementById('printHome')?.addEventListener('click', takeSnapshot);
   document.getElementById('resetProgress')?.addEventListener('click', resetProgress);
   document.getElementById('scoreButton')?.addEventListener('click', ()=>document.getElementById('scoreModal').classList.add('active'));
+  document.getElementById('solutionModeButton')?.addEventListener('click', toggleSolutionMode);
+  document.getElementById('pinConfirm')?.addEventListener('click', confirmPin);
+  document.getElementById('pinCancel')?.addEventListener('click', closePinModal);
+  document.getElementById('solutionPinInput')?.addEventListener('keydown', e=>{ if(e.key==='Enter') confirmPin(); if(e.key==='Escape') closePinModal(); });
+  document.getElementById('pinModal')?.addEventListener('click', e=>{ if(e.target.id==='pinModal') closePinModal(); });
   document.getElementById('scoreClose')?.addEventListener('click', ()=>document.getElementById('scoreModal').classList.remove('active'));
   document.getElementById('scoreModal')?.addEventListener('click', e=>{ if(e.target.id === 'scoreModal') e.currentTarget.classList.remove('active'); });
   document.getElementById('previewClose')?.addEventListener('click', ()=>document.getElementById('previewModal').classList.remove('active'));
