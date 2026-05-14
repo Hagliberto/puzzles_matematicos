@@ -1,0 +1,13 @@
+
+.fox-helper{position:fixed;right:var(--edge);bottom:calc(var(--footer-h) + var(--edge));z-index:74;width:min(340px,calc(100vw - 28px));display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:end;opacity:.95}
+.fox-character{position:relative;width:68px;height:74px;filter:drop-shadow(0 18px 26px rgba(0,0,0,.26));cursor:pointer;user-select:none;-webkit-user-select:none}
+.fox-head{position:absolute;left:9px;top:4px;width:50px;height:44px;background:linear-gradient(145deg,#fb923c,#f97316);border-radius:50% 50% 44% 44%;transform:rotate(-3deg)}
+.fox-ear{position:absolute;top:-10px;width:19px;height:24px;background:#f97316;clip-path:polygon(50% 0,0 100%,100% 100%)}.fox-ear.left{left:3px;transform:rotate(-20deg)}.fox-ear.right{right:3px;transform:rotate(20deg)}.fox-ear:after{content:"";position:absolute;left:5px;top:8px;width:9px;height:13px;background:#fed7aa;clip-path:polygon(50% 0,0 100%,100% 100%)}
+.fox-face{position:absolute;left:10px;bottom:4px;width:30px;height:20px;background:#fff7ed;border-radius:50%}.fox-eye{position:absolute;top:17px;width:5px;height:7px;background:#171717;border-radius:999px}.fox-eye.left{left:16px}.fox-eye.right{right:16px}.fox-nose{position:absolute;left:50%;bottom:11px;width:7px;height:6px;background:#111827;border-radius:999px;transform:translateX(-50%)}
+.fox-body{position:absolute;left:21px;top:42px;width:30px;height:27px;background:linear-gradient(145deg,#fb923c,#ea580c);border-radius:45% 45% 50% 50%}
+.fox-tail{position:absolute;right:2px;bottom:10px;width:36px;height:19px;background:linear-gradient(90deg,#f97316,#fff7ed);border-radius:999px;transform:rotate(-18deg);transform-origin:left center}
+.fox-message{position:relative;padding:11px 12px;border-radius:18px 18px 4px 18px;border:1px solid rgba(255,255,255,.15);background:rgba(6,13,25,.78);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 20px 50px rgba(0,0,0,.30);font-size:.84rem;line-height:1.34;color:rgba(248,251,255,.82)}
+body.light-theme .fox-message{background:rgba(255,255,255,.92);color:rgba(16,32,51,.78)}
+.fox-message strong{display:block;color:var(--text);margin-bottom:3px}.fox-message.play{animation:foxBubble .35s ease both}
+@keyframes foxBubble{0%{transform:translateY(6px) scale(.98);opacity:.4}100%{transform:translateY(0) scale(1);opacity:1}}
+@media(max-width:1040px){.fox-helper{width:74px;right:calc(var(--edge) + 54px);bottom:calc(var(--footer-h) + 92px)}.fox-message{display:none}}

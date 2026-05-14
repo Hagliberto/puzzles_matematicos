@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quadrado Vazado Soma 13</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+  <link rel="stylesheet" href="../../assets/global.css" />
+  <link rel="stylesheet" href="../../assets/fox-assistant/fox.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="game-body game-theme-6" data-math="□ Σ 13">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <a class="logo-link" id="homeLink" data-tip="Voltar ao início" href="../../index.html">🏠</a>
+        <div>
+          <h1>Quadrado Vazado Soma 13</h1>
+          <p>Soma 13 no contorno</p>
+        </div>
+      </div>
+
+      <div class="topbar-stats">
+        <div class="top-stat">⏱️ <span id="timer">00:00</span></div>
+        <div class="top-stat">✅ <span id="completedLines">0/0</span></div>
+        <div class="progress-ring" id="progressRing" style="--progress:0"><span id="progressText">0%</span></div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-button" data-tip="Ver placar" id="scoreToggleTop">🏅</button>
+        <button class="icon-button" data-tip="Tema claro/escuro" id="themeToggle">🌓</button>
+        <button class="icon-button" data-tip="Reiniciar" id="resetTopButton">🔄</button>
+      </div>
+    </header>
+
+    <main class="game-layout theme-6">
+      <section class="panel game-panel">
+        <div class="game-focus">
+          <div class="challenge-intro">
+            <span class="emoji">🧩</span>
+            <strong>Vazado 13</strong>
+            <p>Use os números de 1 a 8 para fazer topo, direita, base e esquerda somarem 13.</p>
+          </div>
+          <div class="hollow-square-board">
+      <div class="hollow-frame"></div>
+      <div class="cell" data-index="0" data-label="A1"></div>
+      <div class="cell" data-index="1" data-label="A2"></div>
+      <div class="cell" data-index="2" data-label="A3"></div>
+      <div class="cell" data-index="3" data-label="B1"></div>
+      <div class="cell" data-index="4" data-label="B3"></div>
+      <div class="cell" data-index="5" data-label="C1"></div>
+      <div class="cell" data-index="6" data-label="C2"></div>
+      <div class="cell" data-index="7" data-label="C3"></div>
+    </div>
+        </div>
+      </section>
+
+      <aside class="panel side-panel">
+        <div class="panel-inner">
+          <h3>Peças</h3>
+          <p class="muted compact-text">Arraste uma peça para preencher totalmente uma casa.</p>
+          <div id="desktopBankSlot"><div class="number-bank" id="numberBank"></div></div>
+          <h3 style="margin-top:14px">Somas</h3>
+          <div class="sum-list" id="sumList"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  
+<div class="modal-overlay" id="finishModal">
+  <div class="modal-card">
+    <div class="modal-badge">🏆</div>
+    <h2>Desafio concluído!</h2>
+    <p>Você finalizou em <strong id="finalTime">00:00</strong>. <span id="recordText">Seu progresso foi salvo.</span></p>
+    <div class="time-compare">
+      <div class="compare-card"><span>1º tempo</span><strong id="firstTimeText">00:00</strong></div>
+      <div class="compare-card"><span>Melhor tempo</span><strong id="bestTimeText">00:00</strong></div>
+    </div>
+    <div class="modal-actions">
+      <button class="primary-button" id="nextButton">Ir para o próximo</button>
+      <button class="button" id="playAgainButton">Jogar novamente</button>
+      <button class="button" id="closeModalButton">Fechar</button>
+    </div>
+  </div>
+</div>
+<div class="toast-stack" id="toastStack"></div>
+<button class="score-button" id="scoreToggle" title="Ver placar">🏅</button>
+<div class="score-drawer" id="scoreDrawer">
+  <strong>Placar local</strong>
+  <p class="muted compact-text" style="margin:6px 0 0">Tempos salvos neste navegador.</p>
+  <div class="score-list" id="scoreList"></div>
+</div>
+<div id="mobileNumberDock"></div>
+<div class="fox-helper">
+  <div class="fox-character" id="foxCharacter" title="Clique para receber outra dica" aria-label="Raposinha de dicas">
+    <div class="fox-tail"></div><div class="fox-body"></div><div class="fox-head"><div class="fox-ear left"></div><div class="fox-ear right"></div><div class="fox-eye left"></div><div class="fox-eye right"></div><div class="fox-face"></div><div class="fox-nose"></div></div>
+  </div>
+  <div class="fox-message"><strong>Raposinha</strong><span id="foxText">Clique em mim para outra dica.</span></div>
+</div>
+
+  
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-card">
+    <div class="modal-badge"><span id="confirmIcon">❔</span></div>
+    <h2 id="confirmTitle">Confirmação</h2>
+    <p id="confirmMessage">Mensagem de confirmação.</p>
+    <p id="confirmDetails" class="muted"></p>
+    <div class="modal-actions">
+      <button class="primary-button" id="confirmPrimary">Confirmar</button>
+      <button class="button" id="confirmSecondary">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+  <footer class="site-footer">Desenvolvido por&nbsp;<button data-lattes="http://lattes.cnpq.br/3494278420363616" type="button">Hagliberto Alves de Oliveira</button></footer>
+
+  <script src="../../assets/challenges.js"></script>
+  <script src="../../assets/core/game-core.js"></script>
+  <script src="../../assets/fox-assistant/fox.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

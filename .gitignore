@@ -1,0 +1,21 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Compactados locais
+*.zip
+*.rar
+*.7z
+
+# Temporários
+tmp/
+temp/
+.cache/

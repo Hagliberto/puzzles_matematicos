@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7dd3fc"/><stop offset=".55" stop-color="#c084fc"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+<rect width="64" height="64" rx="18" fill="#07101f"/>
+<path d="M32 8 57 54H7L32 8Z" fill="url(#g)" opacity=".95"/>
+<circle cx="32" cy="38" r="8" fill="#07101f"/>
+<text x="32" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" font-weight="700" fill="#fff">Σ</text>
+</svg>

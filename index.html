@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogos Mágicos Progressivos</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="stylesheet" href="./assets/global.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">✨</div>
+        <div>
+          <h1>Jogos Mágicos</h1>
+          <p>Desafios progressivos salvos no navegador.</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="primary-button" id="startButton" href="./desafios/triangulo-soma-09/">▶ Começar</a>
+        <button class="icon-button" data-tip="Gerar snapshot" id="printHome">📸</button>
+        <button class="icon-button" data-tip="Tema claro/escuro" id="themeToggle">🌓</button>
+        <button class="icon-button" data-tip="Limpar progresso" id="resetProgress">🧹</button>
+      </div>
+    </header>
+
+    <main class="home-hero">
+      <section class="home-card" id="snapshotArea">
+        <details class="home-expander" open>
+          <summary><span>🧠</span><span>Introdução aos Jogos Mágicos</span></summary>
+          <div class="expander-body">
+            <h1 class="home-intro-title">Resolva, desbloqueie e acompanhe sua evolução.</h1>
+            <p class="home-intro-text">
+              Os Jogos Mágicos formam uma trilha progressiva de raciocínio lógico, percepção espacial e combinação numérica.
+              Cada desafio propõe uma forma geométrica diferente, com peças arrastáveis, somas-alvo e progresso salvo diretamente
+              no navegador. A proposta é transformar o clássico raciocínio dos quadrados mágicos em uma experiência visual,
+              interativa, elegante e adequada tanto para treino rápido quanto para uma sequência completa de desafios.
+            </p>
+            <div class="mode-bar">
+              <button class="mode-pill" data-mode="sequence">🔒 Sequência</button>
+              <button class="mode-pill" data-mode="free">🧭 Livre</button>
+            </div>
+          </div>
+        </details>
+
+        <details class="home-expander">
+          <summary><span>📘</span><span>Como funciona — arraste, some, desbloqueie e compare seus tempos</span></summary>
+          <div class="expander-body">
+            <div class="how-grid">
+              <div class="how-item"><span>👆</span><span>Arraste os números para as casas do tabuleiro e monte as combinações.</span></div>
+              <div class="how-item"><span>Σ</span><span>Complete laterais, linhas, colunas ou diagonais com a soma solicitada.</span></div>
+              <div class="how-item"><span>🏅</span><span>O navegador salva primeiro tempo, melhor tempo, progresso e desafios concluídos.</span></div>
+              <div class="how-item"><span>📸</span><span>Gere um snapshot em PNG para compartilhar sua evolução na tela inicial.</span></div>
+            </div>
+          </div>
+        </details>
+
+        <div class="challenge-grid" id="challengeGrid"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast-stack" id="toastStack"></div>
+  
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-card">
+    <div class="modal-badge"><span id="confirmIcon">❔</span></div>
+    <h2 id="confirmTitle">Confirmação</h2>
+    <p id="confirmMessage">Mensagem de confirmação.</p>
+    <p id="confirmDetails" class="muted"></p>
+    <div class="modal-actions">
+      <button class="primary-button" id="confirmPrimary">Confirmar</button>
+      <button class="button" id="confirmSecondary">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+  
+<div class="modal-overlay" id="previewModal">
+  <div class="modal-card">
+    <div class="modal-badge">👁️</div>
+    <h2 id="previewTitle">Prévia</h2>
+    <p class="muted">Miniatura da solução salva para este desafio.</p>
+    <div id="previewBody" style="margin-top:18px"></div>
+    <div class="modal-actions">
+      <button class="primary-button" id="previewClose">Fechar</button>
+    </div>
+  </div>
+</div>
+
+  <footer class="site-footer">Desenvolvido por&nbsp;<button data-lattes="http://lattes.cnpq.br/3494278420363616" type="button">Hagliberto Alves de Oliveira</button></footer>
+  <script src="./assets/challenges.js"></script>
+  <script src="./assets/core/game-core.js"></script>
+  <script src="./assets/core/home.js"></script>
+</body>
+</html>
