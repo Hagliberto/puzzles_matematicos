@@ -7,4 +7,4 @@ const lines=[
  {id:"left",label:"Esquerda",indexes:[0,3,5],target:TARGET}
 ];
 document.getElementById("sumList").innerHTML=lines.map(line=>`<div class="sum-pill" data-line-pill="${line.id}"><span>${line.label}</span><strong><span data-sum>0</span>/${line.target}</strong></div>`).join("");
-createDragDropGame({gameId:"quadrado-vazado-13",slotCount:8,numbers:[1, 2, 3, 4, 5, 6, 7, 8],lines,nextUrl:"../quadrado-vazado-14/",nextLabel:"Ir para o próximo",hints:["Os quatro cantos contam em duas somas. Eles mandam no jogo.","As casas do meio de cada lado servem para ajuste fino.","Se uma lateral passou da soma, reduza um canto dessa lateral.","Tente equilibrar topo e base antes de fechar as laterais."]});
+createDragDropGame({gameId:"quadrado-vazado-13",slotCount:8,numbers:[1, 2, 3, 4, 5, 6, 7, 8],lines,solution:[1, 4, 8, 7, 3, 5, 6, 2],nextUrl:"../quadrado-vazado-14/",nextLabel:"Ir para o próximo",hints:["Os quatro cantos contam em duas somas. Eles mandam no jogo.","As casas do meio de cada lado servem para ajuste fino.","Se uma lateral passou da soma, reduza um canto dessa lateral.","Tente equilibrar topo e base antes de fechar as laterais."]});

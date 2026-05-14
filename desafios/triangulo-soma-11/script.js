@@ -6,4 +6,4 @@ const lines=[
  {id:"bottom",label:"Base",indexes:[3,4,5],target:TARGET}
 ];
 document.getElementById("sumList").innerHTML=lines.map(line=>`<div class="sum-pill" data-line-pill="${line.id}"><span>${line.label}</span><strong><span data-sum>0</span>/${line.target}</strong></div>`).join("");
-createDragDropGame({gameId:"triangulo-soma-11",slotCount:6,numbers:[1, 2, 3, 4, 5, 6],lines,nextUrl:"../triangulo-soma-12/",nextLabel:"Ir para o próximo",hints:["Os cantos participam de duas somas. Eu começaria por eles!","Quando um lado fechar, tente não mexer nele.","As casas do meio ajustam uma soma por vez.","Se travar, troque dois cantos e veja como as somas mudam."]});
+createDragDropGame({gameId:"triangulo-soma-11",slotCount:6,numbers:[1, 2, 3, 4, 5, 6],lines,solution:[2, 3, 5, 6, 1, 4],nextUrl:"../triangulo-soma-12/",nextLabel:"Ir para o próximo",hints:["Os cantos participam de duas somas. Eu começaria por eles!","Quando um lado fechar, tente não mexer nele.","As casas do meio ajustam uma soma por vez.","Se travar, troque dois cantos e veja como as somas mudam."]});

@@ -157,3 +157,23 @@ Abra `index.html`.
 - Corrigido o conteúdo do círculo central para evitar ocultação do botão e textos.
 - Removida a duplicidade visual entre título e linha de somatório no círculo central.
 - Ajustado o raio do orbit para dar mais respiro ao núcleo central.
+
+
+## Ajustes V20
+
+- Adicionado modo “Soluções” protegido por PIN.
+- PIN padrão: `2026`.
+- O modo soluções mostra todos os desafios como resolvidos para demonstração.
+- Ao abrir um desafio nesse modo, o tabuleiro já aparece preenchido com uma solução válida.
+- O modo soluções não altera tempos, placar, progresso, desbloqueios ou partidas pausadas do usuário.
+- Adicionado botão discreto 🗝️ na appbar da tela inicial.
+- Adicionado modal próprio para digitar o PIN.
+- Adicionadas soluções oficiais nos metadados de cada desafio.
+
+
+## Ajustes V21
+
+- Corrigido o modo “Soluções” nos quadrados mágicos 3x3, 4x4, 5x5 e 6x6.
+- As soluções dos quadrados mágicos agora ficam registradas também nos metadados globais dos desafios.
+- Cada script de desafio passa sua solução diretamente para o motor do jogo, servindo como fallback.
+- O motor do jogo agora usa `options.solution` caso a solução não esteja disponível em `MAGIC_CHALLENGES`.
