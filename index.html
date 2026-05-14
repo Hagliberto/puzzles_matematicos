@@ -7,86 +7,88 @@
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
   <link rel="stylesheet" href="./assets/global.css" />
 </head>
-<body>
-  <div class="app-shell">
-    <header class="topbar">
+<body class="radial-home-page">
+  <div class="app-shell radial-shell-page">
+    <header class="topbar radial-topbar">
       <div class="brand">
         <div class="logo">✨</div>
         <div>
           <h1>Jogos Mágicos</h1>
-          <p>Desafios progressivos salvos no navegador.</p>
+          <p>Quebra-cabeças matemáticos com progresso salvo no navegador.</p>
         </div>
       </div>
-      <div class="nav-actions">
-        <a class="primary-button" id="startButton" href="./desafios/triangulo-soma-09/">▶ Começar</a>
+      <div class="nav-actions appbar-extended-actions">
+        <span class="header-pill" id="appCompletedPill">🏅 0/12</span>
+        <span class="header-pill compact" id="appPausedPill">⏸ 0</span>
+        <button class="icon-button" data-tip="Ver placar" id="scoreButton">🏆</button>
         <button class="icon-button" data-tip="Gerar snapshot" id="printHome">📸</button>
         <button class="icon-button" data-tip="Tema claro/escuro" id="themeToggle">🌓</button>
         <button class="icon-button" data-tip="Limpar progresso" id="resetProgress">🧹</button>
       </div>
     </header>
 
-    <main class="home-hero">
-      <section class="home-card" id="snapshotArea">
-        <details class="home-expander" open>
-          <summary><span>🧠</span><span>Introdução aos Jogos Mágicos</span></summary>
-          <div class="expander-body">
-            <h1 class="home-intro-title">Resolva, desbloqueie e acompanhe sua evolução.</h1>
-            <p class="home-intro-text">
-              Os Jogos Mágicos formam uma trilha progressiva de raciocínio lógico, percepção espacial e combinação numérica.
-              Cada desafio propõe uma forma geométrica diferente, com peças arrastáveis, somas-alvo e progresso salvo diretamente
-              no navegador. A proposta é transformar o clássico raciocínio dos quadrados mágicos em uma experiência visual,
-              interativa, elegante e adequada tanto para treino rápido quanto para uma sequência completa de desafios.
-            </p>
-            <div class="mode-bar">
-              <button class="mode-pill" data-mode="sequence">🔒 Sequência</button>
-              <button class="mode-pill" data-mode="free">🧭 Livre</button>
-            </div>
-          </div>
-        </details>
-
-        <details class="home-expander">
-          <summary><span>📘</span><span>Como funciona — arraste, some, desbloqueie e compare seus tempos</span></summary>
-          <div class="expander-body">
-            <div class="how-grid">
-              <div class="how-item"><span>👆</span><span>Arraste os números para as casas do tabuleiro e monte as combinações.</span></div>
-              <div class="how-item"><span>Σ</span><span>Complete laterais, linhas, colunas ou diagonais com a soma solicitada.</span></div>
-              <div class="how-item"><span>🏅</span><span>O navegador salva primeiro tempo, melhor tempo, progresso e desafios concluídos.</span></div>
-              <div class="how-item"><span>📸</span><span>Gere um snapshot em PNG para compartilhar sua evolução na tela inicial.</span></div>
-            </div>
-          </div>
-        </details>
-
-        <div class="challenge-grid" id="challengeGrid"></div>
+    <main class="radial-home">
+      <section class="radial-stage-panel">
+        <div class="radial-stage" id="radialStage">
+          <div class="radial-stars" aria-hidden="true"></div>
+          <div class="orbital-ring" id="orbitalRing"></div>
+          <article class="hub-card" id="hubCard"></article>
+        </div>
       </section>
     </main>
   </div>
+
   <div class="toast-stack" id="toastStack"></div>
-  
-<div class="modal-overlay" id="confirmModal">
-  <div class="modal-card">
-    <div class="modal-badge"><span id="confirmIcon">❔</span></div>
-    <h2 id="confirmTitle">Confirmação</h2>
-    <p id="confirmMessage">Mensagem de confirmação.</p>
-    <p id="confirmDetails" class="muted"></p>
-    <div class="modal-actions">
-      <button class="primary-button" id="confirmPrimary">Confirmar</button>
-      <button class="button" id="confirmSecondary">Cancelar</button>
+
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-card">
+      <div class="modal-badge"><span id="confirmIcon">❔</span></div>
+      <h2 id="confirmTitle">Confirmação</h2>
+      <p id="confirmMessage">Mensagem de confirmação.</p>
+      <p id="confirmDetails" class="muted"></p>
+      <div class="modal-actions">
+        <button class="primary-button" id="confirmPrimary">Confirmar</button>
+        <button class="button" id="confirmSecondary">Cancelar</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-card">
+      <div class="modal-badge">👁️</div>
+      <h2 id="previewTitle">Solução</h2>
+      <p class="muted">Miniatura da solução salva para este desafio.</p>
+      <div id="previewBody" style="margin-top:18px"></div>
+      <div class="modal-actions">
+        <button class="primary-button" id="previewClose">Fechar</button>
+      </div>
+    </div>
+  </div>
 
   
-<div class="modal-overlay" id="previewModal">
-  <div class="modal-card">
-    <div class="modal-badge">👁️</div>
-    <h2 id="previewTitle">Prévia</h2>
-    <p class="muted">Miniatura da solução salva para este desafio.</p>
-    <div id="previewBody" style="margin-top:18px"></div>
-    <div class="modal-actions">
-      <button class="primary-button" id="previewClose">Fechar</button>
+  <div class="modal-overlay" id="challengeInfoModal">
+    <div class="modal-card challenge-info-modal-card">
+      <div class="modal-badge" id="challengeInfoIcon">🧩</div>
+      <h2 id="challengeInfoTitle">Desafio</h2>
+      <p id="challengeInfoSubtitle" class="muted">Informações do desafio.</p>
+      <div id="challengeInfoBody" class="challenge-info-body"></div>
+      <div class="modal-actions" id="challengeInfoActions"></div>
     </div>
   </div>
-</div>
+
+  
+  <div class="modal-overlay" id="scoreModal">
+    <div class="modal-card score-modal-card">
+      <div class="modal-badge">🏆</div>
+      <h2>Placar local</h2>
+      <p class="muted">Resumo dos desafios concluídos, tempos e partidas pausadas salvos neste navegador.</p>
+      <div class="score-summary-row" id="scoreSummaryRow"></div>
+      <div class="score-list" id="scoreList"></div>
+      <div class="modal-actions">
+        <button class="primary-button" id="scoreClose">Fechar</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer">Desenvolvido por&nbsp;<button data-lattes="http://lattes.cnpq.br/3494278420363616" type="button">Hagliberto Alves de Oliveira</button></footer>
   <script src="./assets/challenges.js"></script>
