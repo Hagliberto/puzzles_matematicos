@@ -20,6 +20,7 @@
       <div class="nav-actions appbar-extended-actions">
         <span class="header-pill" id="appCompletedPill">🏅 0/12</span>
         <span class="header-pill compact" id="appPausedPill">⏸ 0</span>
+        <button class="icon-button" data-tip="Modo soluções com PIN" id="solutionModeButton">🗝️</button>
         <button class="icon-button" data-tip="Ver placar" id="scoreButton">🏆</button>
         <button class="icon-button" data-tip="Gerar snapshot" id="printHome">📸</button>
         <button class="icon-button" data-tip="Tema claro/escuro" id="themeToggle">🌓</button>
@@ -86,6 +87,24 @@
       <div class="score-list" id="scoreList"></div>
       <div class="modal-actions">
         <button class="primary-button" id="scoreClose">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="pinModal">
+    <div class="modal-card pin-modal-card">
+      <div class="modal-badge">🗝️</div>
+      <h2>Modo soluções</h2>
+      <p class="muted">Digite o PIN para liberar uma versão demonstrativa com todos os desafios resolvidos.</p>
+      <div class="pin-box">
+        <label for="solutionPinInput">PIN de acesso</label>
+        <input id="solutionPinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Digite o PIN" maxlength="8" />
+        <small id="pinFeedback">Esse modo não altera tempos, placar nem progresso do jogador.</small>
+      </div>
+      <div class="modal-actions">
+        <button class="primary-button" id="pinConfirm">Liberar soluções</button>
+        <button class="button" id="pinCancel">Cancelar</button>
       </div>
     </div>
   </div>

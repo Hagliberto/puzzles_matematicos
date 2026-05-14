@@ -14,6 +14,14 @@ window.MAGIC_CHALLENGES = [
       5,
       6
     ],
+    "solution": [
+      1,
+      5,
+      6,
+      3,
+      4,
+      2
+    ],
     "math": "△ ∑ 9",
     "order": 0,
     "next": "triangulo-soma-10"
@@ -32,6 +40,14 @@ window.MAGIC_CHALLENGES = [
       4,
       5,
       6
+    ],
+    "solution": [
+      1,
+      4,
+      6,
+      5,
+      2,
+      3
     ],
     "math": "△ ∑ 10",
     "order": 1,
@@ -52,6 +68,14 @@ window.MAGIC_CHALLENGES = [
       5,
       6
     ],
+    "solution": [
+      2,
+      3,
+      5,
+      6,
+      1,
+      4
+    ],
     "math": "△ ∑ 11",
     "order": 2,
     "next": "triangulo-soma-12"
@@ -70,6 +94,14 @@ window.MAGIC_CHALLENGES = [
       4,
       5,
       6
+    ],
+    "solution": [
+      4,
+      2,
+      3,
+      6,
+      1,
+      5
     ],
     "math": "△ ∑ 12",
     "order": 3,
@@ -92,6 +124,16 @@ window.MAGIC_CHALLENGES = [
       7,
       8
     ],
+    "solution": [
+      1,
+      5,
+      6,
+      8,
+      4,
+      3,
+      7,
+      2
+    ],
     "math": "□ ∑ 12",
     "order": 4,
     "next": "quadrado-vazado-13"
@@ -112,6 +154,16 @@ window.MAGIC_CHALLENGES = [
       6,
       7,
       8
+    ],
+    "solution": [
+      1,
+      4,
+      8,
+      7,
+      3,
+      5,
+      6,
+      2
     ],
     "math": "□ ∑ 13",
     "order": 5,
@@ -134,6 +186,16 @@ window.MAGIC_CHALLENGES = [
       7,
       8
     ],
+    "solution": [
+      1,
+      5,
+      8,
+      6,
+      2,
+      7,
+      3,
+      4
+    ],
     "math": "□ ∑ 14",
     "order": 6,
     "next": "quadrado-vazado-15"
@@ -155,6 +217,16 @@ window.MAGIC_CHALLENGES = [
       7,
       8
     ],
+    "solution": [
+      3,
+      4,
+      8,
+      5,
+      1,
+      7,
+      2,
+      6
+    ],
     "math": "□ ∑ 15",
     "order": 7,
     "next": "quadrado-magico-3x3"
@@ -168,7 +240,18 @@ window.MAGIC_CHALLENGES = [
     "n": 3,
     "math": "3×3 ∑ 15",
     "order": 8,
-    "next": "quadrado-magico-4x4"
+    "next": "quadrado-magico-4x4",
+    "solution": [
+      8,
+      1,
+      6,
+      3,
+      5,
+      7,
+      4,
+      9,
+      2
+    ]
   },
   {
     "id": "quadrado-magico-4x4",
@@ -179,7 +262,25 @@ window.MAGIC_CHALLENGES = [
     "n": 4,
     "math": "4×4 ∑ 34",
     "order": 9,
-    "next": "quadrado-magico-5x5"
+    "next": "quadrado-magico-5x5",
+    "solution": [
+      16,
+      2,
+      3,
+      13,
+      5,
+      11,
+      10,
+      8,
+      9,
+      7,
+      6,
+      12,
+      4,
+      14,
+      15,
+      1
+    ]
   },
   {
     "id": "quadrado-magico-5x5",
@@ -190,7 +291,34 @@ window.MAGIC_CHALLENGES = [
     "n": 5,
     "math": "5×5 ∑ 65",
     "order": 10,
-    "next": "quadrado-magico-6x6"
+    "next": "quadrado-magico-6x6",
+    "solution": [
+      17,
+      24,
+      1,
+      8,
+      15,
+      23,
+      5,
+      7,
+      14,
+      16,
+      4,
+      6,
+      13,
+      20,
+      22,
+      10,
+      12,
+      19,
+      21,
+      3,
+      11,
+      18,
+      25,
+      2,
+      9
+    ]
   },
   {
     "id": "quadrado-magico-6x6",
@@ -201,6 +329,44 @@ window.MAGIC_CHALLENGES = [
     "n": 6,
     "math": "6×6 ∑ 111",
     "order": 11,
-    "next": ""
+    "next": "",
+    "solution": [
+      35,
+      1,
+      6,
+      26,
+      19,
+      24,
+      3,
+      32,
+      7,
+      21,
+      23,
+      25,
+      31,
+      9,
+      2,
+      22,
+      27,
+      20,
+      8,
+      28,
+      33,
+      17,
+      10,
+      15,
+      30,
+      5,
+      34,
+      12,
+      14,
+      16,
+      4,
+      36,
+      29,
+      13,
+      18,
+      11
+    ]
   }
 ];
